@@ -4,18 +4,19 @@ import com.example.services.GitHubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 public class IndexListener implements ApplicationListener<IndexEvent> {
-    private GitHubService github;
+    private RestTemplate template;
 
     @Autowired
-    public IndexListener(GitHubService github) {
-        this.github = github;
+    public IndexListener(RestTemplate template) {
+        this.template = template;
     }
 
     @Override
     public void onApplicationEvent(IndexEvent event) {
-        System.out.println(github.listRepos("dimiro1"));
+        template.getForObject("http://localhost:5000/hello", String.class);
     }
 }
